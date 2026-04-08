@@ -94,7 +94,7 @@ function renderChatList() {
     const el = document.createElement('div');
     el.className = 'chat-history-item' + (realIdx === currentSessionIndex ? ' active' : '');
     el.textContent = s.title;
-    el.onclick = () => loadSession(realIdx);
+    el.onclick = () => { loadSession(realIdx); closeSidebar(); };
     list.appendChild(el);
   });
 }
@@ -277,4 +277,25 @@ function handleKey(e) {
 function autoResize(el) {
   el.style.height = 'auto';
   el.style.height = Math.min(el.scrollHeight, 160) + 'px';
+}
+
+// ============================================================
+// SIDEBAR TOGGLE (Mobile)
+// ============================================================
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  const isOpen = sidebar.classList.contains('open');
+  if (isOpen) {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  } else {
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+  }
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('show');
 }
